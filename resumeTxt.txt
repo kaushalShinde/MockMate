@@ -1,0 +1,18 @@
+
+TechStack: javascript, react js, node js, soket io, express js, mongodb, postman, material ui
+- mokemate is an video and audio calling application built to help the remote users take moke interview.
+- user can post the requirement of them, then other users can add them as a friend.
+- user than can access the chat window, to message other users.
+- user can schedule the mock interview with other user.
+- user will then redirected to the video calling interface.
+
+
+Tech Stack: JavaScript, React.js, Node.js, Socket.io, Express.js, MongoDB, Postman, Material UI
+- Engineered a remote mock interview platform enabling users to post requirements, connect, and schedule interviews.
+- Architected a real-time messaging system for user communication and interview coordination.
+- Developed a seamless transition to a video calling interface for conducting mock interviews.
+- Optimized backend services for scalable and efficient performance.
+- Integrated user authentication and authorization mechanisms for secure access.
+
+
+

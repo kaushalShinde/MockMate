@@ -43,8 +43,9 @@ const ChatList = ({
             {
                 chats?.map((data, index) => {
 
-                    {/* console.log(data); */}
-                    const {_id, users, lastMessage} = data;
+                    {/* console.log("ChatList Mapped Item: ", data); */}
+
+                    const {_id, users, lastMessage, createdAt} = data;
                     const newMessageAlert = newMessagesAlert?.find(
                         ({chatId}) => (chatId?.toString() === _id?.toString())
                     );
@@ -60,7 +61,10 @@ const ChatList = ({
                             name={users[0]?.name}
                             avatar={users[0]?.avatar}
                             lastMessage={lastMessage}
+                            senderId={data?.lastMessage?.sender}
+                            receiverId={data?.lastMessage?.receiver}
                             isOnline={isOnline}
+                            createdAt={createdAt}
                         />
                     )
                 })

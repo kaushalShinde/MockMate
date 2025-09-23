@@ -33,6 +33,9 @@ const createPost = async (req, res) => {
             dislikes: [],
         });
 
+        await post.populate('creator', '_id username avatar'); 
+
+        
         // const allUsers = await User.find().select("_id");
         // const formatedIds = allUsers.map((i) => i._id.toString());
 

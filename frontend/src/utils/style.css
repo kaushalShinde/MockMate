@@ -41,3 +41,46 @@
     background: 'linear-gradient(140deg, #edf6f9, #BEADFA)',*/
     
   }
+
+
+  .home-background {
+    height: 100vh;       /* full screen height */
+    width: 100%;         /* full width */
+    /* background: linear-gradient(-45deg, #e0f7ff, #d0f0ff, #c0e8ff, #fff5cc);     */
+    background: linear-gradient(-45deg, #e0f7ff, #d0f0ff, #c0e8ff, #feefb3);        
+
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+  }
+  
+  @keyframes gradientShift {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  
+  
+@keyframes circularGradient {
+  0% {
+      background-position: 50% 0%;   /* Start at the top center */
+  }
+  25% {
+      background-position: 100% 50%; /* Move to the right center */
+  }
+  50% {
+      background-position: 50% 100%; /* Move to the bottom center */
+  }
+  75% {
+      background-position: 0% 50%;   /* Move to the left center */
+  }
+  100% {
+      background-position: 50% 0%;   /* Back to the top center */
+  }
+}
+  

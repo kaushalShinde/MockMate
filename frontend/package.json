@@ -14,6 +14,7 @@
     "@zegocloud/zego-uikit-prebuilt": "^2.6.0",
     "6pp": "^1.2.16",
     "axios": "^1.7.2",
+    "date-fns": "^4.1.0",
     "lottie-web": "^5.12.2",
     "moment": "^2.30.1",
     "react": "^18.2.0",

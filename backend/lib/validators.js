@@ -2,10 +2,10 @@
 
 
 const newUserValidator = (req) => {
-    const { name, username, password, bio, organization, designation } = req.body;
+    const { name, username, email, password, bio, organization, designation } = req.body;
     const file = req.file;
 
-    if(!name || !username || !password){
+    if(!name || !email || !username || !password){
         console.log('New User Validation Failed');
         return {
             success: false,
@@ -24,9 +24,9 @@ const newUserValidator = (req) => {
 }
 
 const loginValidator = (req) => {
-    const { username, password } = req.body;
+    const { email, password } = req.body;
 
-    if(!username || !password){
+    if(!email || !password){
         console.log('Login Validation Failed');
         return {
             success: false,

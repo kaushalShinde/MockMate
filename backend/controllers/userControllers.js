@@ -18,7 +18,7 @@ const newUser = async (req, res) => {
         // console.log(req.body);
         // console.log(req.file);
 
-        const { name, username, password, bio, organization, designation } = req.body;
+        const { name, username, email, password, bio, organization, designation } = req.body;
         const file = req.file;
 
         const validationResult = newUserValidator(req);
@@ -60,6 +60,7 @@ const newUser = async (req, res) => {
         const user = await User.create({
             name: name,
             username: username,
+            email: email,
             password: hashedPassword,
             bio: bio,
             avatar: avatar,
@@ -92,18 +93,18 @@ const newUser = async (req, res) => {
 
 const login = async (req, res) => {
     try{
-        const { username, password } = req.body;
+        const { email, password } = req.body;
 
         const validationResult = loginValidator(req);
         if(!validationResult?.success){
             return res.status(404).json(validationResult);
         }
 
-        const user = await User.findOne({username});
+        const user = await User.findOne({ email });
         if(!user){
             return res.status(400).json({
                 success: false,
-                message: "Invalid Username"
+                message: "Invalid Email"
             })
         }
 
@@ -208,10 +209,48 @@ const getOtherUserProfile = async (req, res) => {
     }
 }
 
+const markNotificationRead = async (req, res) => {
+
+    // todo 
+    // validate if user is the owner of notification or not
+    // for now, skipped it due to uncessary get notification calls
+
+    try {
+        const { notificationId } = req.body;
+        
+        await Notification.updateOne(
+            { _id: notificationId },
+            { $set: { status: "read" } }
+        );
+
+        return res.status(200).json({
+            success: true,
+        })
+    }
+    catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            success: false,
+            message: "Internal Server Error",
+        })
+    }
+}
+
 const sendFriendRequest = async (req, res) => {
-    try{
+    try{    
+        
         const { userId } = req.body;
         const me = await User.findOne({_id: req.user});
+
+        if(userId == me?._id) {
+            return res.status(400).json({
+                success: false,
+                message: "Can't send reqeust to yourself",
+            })
+        }
+
+        console.log("otherUser: ", userId);
+        console.log("me: ", me);
 
         const checkRequest = await Request.findOne({
             $or: [
@@ -220,6 +259,8 @@ const sendFriendRequest = async (req, res) => {
             ]
         });
 
+        console.log("checkRequest: ", checkRequest)
+
         if(checkRequest) {
             return res.status(400).json({
                 success: false,
@@ -227,16 +268,44 @@ const sendFriendRequest = async (req, res) => {
             })
         }
 
-        const request = await Request.create({
+        const friendRequest = await Request.create({
             sender: req?.user,
             receiver: userId,
         });
-        const requestId = request?._id;
+        const requestId = friendRequest?._id;
+
+        console.log("friendRequest: ", friendRequest)
+
+        
+        // notificationForRealTime => this is for the person who receives the request
+        const notificationForRealTime = {
+            sender: {
+                _id: me?._id,
+                username: me?.username,
+                name: me?.name,
+            },
+            receiver: {
+                _id: userId,
+            },
+            notificationContent: `${me?.username} sent you friend request.`,
+            category: "request",
+            requestId: requestId,
+        }
 
         // TODO
-        // Store request in notification
-        // EMIT Event for realtime notification
+        // EMIT Event for realtime notification 
+        emitEvent(
+            req, 
+            'NEW_NOTIFICATION',
+            [userId],
+            {
+                success: true,
+                message: notificationForRealTime,
+            }
+        )
+
         
+        // Store request in notification schema
         const notification = await Notification.create({
             user: userId,
             notification: `${me?.username} sent you friend request.`,
@@ -293,18 +362,30 @@ const acceptFriendRequest = async (req, res) => {
         // console.log(members);
 
         // todo
-        // Create chat between two also reflect it in realtime friends of user
+        // Create chat between two, also reflect it in realtime friends of user
+
 
         // todo
-        // notification
+        // EMIT Event realtime notification
+
+
+        // delete the existing notification
         await Notification.deleteOne({_id: deleteNotificationId})
 
 
-        // EMIT Event realtime notification
+        // create new notification saying, both are friends now
+        // for me
+        await Notification.create({
+            user: receiverId,
+            notification: `You & ${request?.sender?.username} are friends now.`,
+        })
+
+        // for other user
         await Notification.create({
             user: senderId,
-            notification: `${request?.receiver?.username} Accepted Friend Request!!`,
+            notification: `${request?.receiver?.username} accepted your friend request!`,
         })
+
 
         // const availableChat = await Chat.find({
         //     $or: [
@@ -350,7 +431,7 @@ const acceptFriendRequest = async (req, res) => {
 
 const rejectFriendRequest = async (req, res) => {
     try{
-        const { requestId } = req.body;
+        const { requestId, deleteNotificationId } = req.body;
         const user = req?.user;
 
         const request = await Request.findOne({_id: requestId})
@@ -375,23 +456,21 @@ const rejectFriendRequest = async (req, res) => {
             })
         }
 
-        // todo
         // notification to sender
         const notification = await Notification.create({
             user: senderId,
             content: `${request?.receiver?.username} rejected you friend request.`,
         })
+        
+        // delete the existing notification
+        await Notification.deleteOne({_id: deleteNotificationId})
 
         // delete request from db
         await request.deleteOne();
 
-
-        // todo 
-        // emit event => refetch notification that request is rejected 
-
         return res.status(200).json({
             success: true,
-            message: "request accepted successfully",
+            message: "request rejected successfully",
             senderId: senderId,
         });
     }
@@ -413,13 +492,14 @@ const getAllNotifications = async (req, res) => {
             .populate('user', 'avatar username name')
             .sort({createdAt: -1});
 
-        const allNotifications = notifications.map(({_id, user, category, requestId, notification, status}) => ({
+        const allNotifications = notifications.map(({_id, user, category, requestId, notification, status, createdAt}) => ({
             _id,
             user, 
             category,
             requestId, 
             notification,
             status,
+            createdAt,
         }))
 
         return res.status(200).json({
@@ -452,7 +532,7 @@ const getMyFriends = async (req, res) => {
             select: '_id username name avatar lastActive',
         }).populate({
             path: 'lastMessage',
-            select: 'sender receiver content attachments',
+            select: 'sender receiver content attachments createdAt',
         }).sort({ updatedAt: -1 });
 
 
@@ -492,7 +572,8 @@ const checkIsFriendAlready = async (req, res) => {
         // const { otherUser } = req.body;
         const { creatorId } = req.params;
 
-        const otherUser = creatorId;
+        // previously here it was 'otherUser'
+        const otherUserId = creatorId;
 
         if(creatorId === undefined) {
             return res.status(404).json({
@@ -502,7 +583,7 @@ const checkIsFriendAlready = async (req, res) => {
         }
 
         // check if the user is itself post creator or not
-        if(userId == otherUser) {
+        if(userId == otherUserId) {
             return res.status(200).json({
                 success: true,
                 isFriend: true,
@@ -513,15 +594,15 @@ const checkIsFriendAlready = async (req, res) => {
         
         const checkRequest = await Request.findOne({
             $or: [
-                { sender: otherUser, receiver: userId },
-                { sender: userId, receiver: otherUser },
+                { sender: otherUserId, receiver: userId },
+                { sender: userId, receiver: otherUserId },
             ]
         });
 
         const chats = await Chat.find({
             $or: [
-                { users: [userId, otherUser] },
-                { users: [otherUser, userId] },
+                { users: [userId, otherUserId] },
+                { users: [otherUserId, userId] },
             ]
         }).populate('users', '_id username name');
 
@@ -727,6 +808,7 @@ export {
     acceptFriendRequest,
     rejectFriendRequest,
     getAllNotifications,
+    markNotificationRead,
     getMyFriends,
     checkIsFriendAlready,
     getAllMessages,

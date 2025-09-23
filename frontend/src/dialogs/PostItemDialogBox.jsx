@@ -9,7 +9,7 @@ import toast from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { grey, lightYellow, white } from '../constants/colors';
 import { server } from '../constants/config';
-import { setPostDialogBox } from '../redux/reducers/misc';
+import { setPostDialogBox, setPost, setPostLikesCount, setPostLikedByUser, setPostLikedColor, setFriendRequestSent, setIsPostCreatorFriendAlready, resetPostState } from '../redux/reducers/post';
 import { light } from '@mui/material/styles/createPalette';
 
 const PostItemDialogBox = () => {
@@ -19,23 +19,26 @@ const PostItemDialogBox = () => {
 
     const { user } = useSelector((state) => state.auth);
 
-    const { postDialogBox } = useSelector((state) => state.misc);
+    const { postDialogBox, post, postLikesCount, postLikedByUser, postLikedColor, friendRequestSent, isPostCreatorFriendAlready } = useSelector((state) => state.post);
     
     console.log('rendered componenet - postItemDialogBox', postDialogBox);
 
-    const [post, setPost] = useState(null);
-    const [postLikesCount, setPostLikesCount] = useState(0);
-    const [postLikedByUser, setPostLikedByUser] = useState(false);
-    const [postLikedColor, setPostLikedColor] = useState(grey);
+    // const [post, setPost] = useState(null);
+    // const [postLikesCount, setPostLikesCount] = useState(0);
+    // const [postLikedByUser, setPostLikedByUser] = useState(false);
+    // const [postLikedColor, setPostLikedColor] = useState(grey);
+    // const [friendRequestSent, setFriendRequestSent] = useState(false);
+    // const [isPostCreatorFriendAlready, setIsPostCreatorFriendAlready] = useState(false);
 
-    const [friendRequestSent, setFriendRequestSent] = useState(false);
-    const [isPostCreatorFriendAlready, setIsPostCreatorFriendAlready] = useState(false);
 
+    // todo
+    // now only keep add friend and like toggle call in this box, remove other states
 
 
     useEffect(() => {
+        console.log("##################", friendRequestSent, isPostCreatorFriendAlready);
         // console.log(postDialogBox);
-        setPost(postDialogBox);
+        // setPost(postDialogBox);
         console.log(post);
 
         // todo
@@ -52,7 +55,7 @@ const PostItemDialogBox = () => {
             }, config)
             .then((response) => {
                 // console.log(response?.data);
-                setPost(response?.data?.post);
+                // setPost(response?.data?.post);
                 console.log(post);
             })
             .catch((error) => {        
@@ -95,15 +98,14 @@ const PostItemDialogBox = () => {
 
 
     const handleDialogBoxClose = () => {
-        dispatch(setPostDialogBox(null));
-        setPost(null);
+        dispatch(resetPostState());
 
-        // console.log('handleDialogBoxClose', postDialogBox);
+        console.log('handleDialogBoxClose', postDialogBox);
 
-        // onClose();
     }
 
     const handleAddFriend = async () => {
+        console.log("handleAddFriend: ", post?.creator?._id);
 
         const config = {
             withCredentials: true,
@@ -116,7 +118,7 @@ const PostItemDialogBox = () => {
                 userId: post?.creator?._id,
             }, config);
 
-            setFriendRequestSent(true);
+            dispatch(setFriendRequestSent(true));
             toast.success(response?.data?.message);
         }
         catch(error) {
@@ -125,40 +127,40 @@ const PostItemDialogBox = () => {
         }
     }
 
-    const isPostCreatorFriendHelper = async () => {
+    // const isPostCreatorFriendHelper = async () => {
 
-        console.log('checking isAlreadyFriend...');
-        console.log(post, post?.creator?._id);
+    //     console.log('checking isAlreadyFriend...');
+    //     console.log(post, post?.creator?._id);
 
-        if(!post) { 
-            return;
-        }
+    //     if(!post) { 
+    //         return;
+    //     }
         
-        try{
+    //     try{
 
-            const response = await axios.get(`${server}/api/v1/user/isfriend/${post?.creator?._id}`, {
-                withCredentials: true,
-            })
+    //         const response = await axios.get(`${server}/api/v1/user/isfriend/${post?.creator?._id}`, {
+    //             withCredentials: true,
+    //         })
 
-            if(response?.data?.request){
-                setFriendRequestSent(true);
-            }
-            if(response?.data?.isFriend) {
-                setIsPostCreatorFriendAlready(true);
-            }
-        }
-        catch(error) {
-            // console.log(error?.response?.data?.message)
-            // toast.error(error?.response?.data?.message || "Something went Wrong");
-        }
-    }
+    //         if(response?.data?.request){
+    //             setFriendRequestSent(true);
+    //         }
+    //         if(response?.data?.isFriend) {
+    //             setIsPostCreatorFriendAlready(true);
+    //         }
+    //     }
+    //     catch(error) {
+    //         // console.log(error?.response?.data?.message)
+    //         // toast.error(error?.response?.data?.message || "Something went Wrong");
+    //     }
+    // }
 
-    const isPostLikedByUser = async () => {
+    // const isPostLikedByUser = async () => {
 
-        const isLiked = post?.likes?.includes(user?._id);
-        isLiked && setPostLikedColor(lightYellow);
-        setPostLikedByUser(isLiked);
-    }
+    //     const isLiked = post?.likes?.includes(user?._id);
+    //     isLiked && setPostLikedColor(lightYellow);
+    //     setPostLikedByUser(isLiked);
+    // }
 
     const toggleLikePost = async () => {
 
@@ -175,14 +177,14 @@ const PostItemDialogBox = () => {
 
             if(response?.data?.success){
                 if(postLikedByUser) {
-                    setPostLikedByUser(false);
-                    setPostLikedColor(grey);
-                    setPostLikesCount((prev) => prev - 1);
+                    dispatch(setPostLikedByUser(false));
+                    dispatch(setPostLikedColor(grey));
+                    dispatch(setPostLikesCount(postLikesCount - 1));
                 }
                 else {
-                    setPostLikedByUser(true);
-                    setPostLikedColor(lightYellow);
-                    setPostLikesCount((prev) => prev + 1);
+                    dispatch(setPostLikedByUser(true));
+                    dispatch(setPostLikedColor("yellow"));
+                    dispatch(setPostLikesCount(postLikesCount + 1));
                 }
             }
             else {
@@ -198,11 +200,12 @@ const PostItemDialogBox = () => {
         navigate(`/profile/${post?.creator?.username}`);
     }
 
-    useEffect(() => {
-        setPostLikesCount(post?.likes?.length);
-        isPostLikedByUser();
-        isPostCreatorFriendHelper();
-    }, [post]);
+    // useEffect(() => {
+    //     // setPostLikesCount(post?.likes?.length);
+    //     // isPostLikedByUser();
+    //     // isPostCreatorFriendHelper();
+    // }, [post]);
+      
 
   return (
     <>

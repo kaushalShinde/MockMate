@@ -7,7 +7,7 @@ import axios from 'axios';
 import { server } from '../../constants/config';
 import toast from 'react-hot-toast';
 import { pinkWhite } from '../../constants/colors';
-import { setIsMobileScreen, setRefetchPostList } from '../../redux/reducers/misc';
+import { setIsMobileScreen, setRefetchPostList, setPostAddedByMe } from '../../redux/reducers/misc';
 import { useSelector, useDispatch } from 'react-redux';
 
 
@@ -15,7 +15,7 @@ const CreatePost = () => {
 
     const dispatch = useDispatch();
 
-    const { refetchPostList } = useSelector((state) => state.misc);
+    const { refetchPostList, postAddedByMe } = useSelector((state) => state.misc);
 
     const { isMobileScreen } = useSelector((state) => state.misc);
     const [isTitleError, setTitleError] = useState(false);
@@ -64,6 +64,7 @@ const CreatePost = () => {
             }, config);
 
             if(response?.data?.success) {
+                dispatch(setPostAddedByMe(response?.data?.post));
                 dispatch(setRefetchPostList(true));
             }
 
@@ -83,16 +84,17 @@ const CreatePost = () => {
       <Box
         height={"auto"}
         // width={"90%"}
+        // className={"home-background"}
         sx={{
             boxSizing: 'border-box',
-            bgcolor: pinkWhite,
+            // bgcolor: "#E5D9F2",
 
             alignSelf: "center",
             justifySelf: "center",
 
             marginLeft: "auto",
             marginRight: "auto",
-            // marginTop: "5rem",
+            marginTop: "10rem",
 
 
             width: {
@@ -103,7 +105,8 @@ const CreatePost = () => {
                 xl: "80%",
             },
 
-            border: "2px solid black",
+            border: "1px solid black",
+            borderRadius: "5px",
         }}
       >
 
@@ -136,7 +139,7 @@ const CreatePost = () => {
                     borderRadius: '5px',
                     resize: 'none', // Disable resizing by the user
 
-                    
+                    backgroundColor: "transparent",
                     overflow: "auto",
                     '&::-webkit-scrollbar': {
                         display: 'none',  // For Chrome, Safari, and Opera
@@ -160,6 +163,7 @@ const CreatePost = () => {
                     resize: 'none', // Disable resizing by the user
 
                     
+                    backgroundColor: "transparent",
                     overflow: "auto",
                     '&::-webkit-scrollbar': {
                         display: 'none',  // For Chrome, Safari, and Opera

@@ -10,17 +10,22 @@ import { CallReceivedRounded as CallReceivedRoundedIcon, DoneAllRounded as DoneA
 import { setSelectedChat } from '../../redux/reducers/chat';
 import { setIsChatDrawerOpen } from "../../redux/reducers/misc";
 
+import { formatDate, formatChatTime } from "../../library/functions";
+
 const ChatItem = ({
   chatUser,
   avatar,
   name,
   _id,
   lastMessage,
+  senderId,
+  receiverId,
+  createdAt,
 }) => {
   
   const dispatch = useDispatch();
   
-  const { selectedChat } = useSelector((state) => state.auth);
+  const { user, selectedChat } = useSelector((state) => state.auth);
   const { isMobileScreen } = useSelector((state) => state.misc);
   const { isChatDrawerOpen } = useSelector((state) => state.misc);
   
@@ -41,7 +46,8 @@ const ChatItem = ({
             height: "5rem",
             width: "100%",
             color: "black",
-            border: "1px solid black",
+            border: "1px solid #ccc",
+            // borderRadius: "5px",
             // bgcolor: selectedChat?._id == _id && "#D2DE32",
           }}
           onClick={handleChatItemClick}
@@ -63,6 +69,7 @@ const ChatItem = ({
                 sx={{
                   height: "3.5rem",
                   width: "3.5rem",
+                  border: "1px solid #9e9e9e",
                 }}  
               />
             </Box>
@@ -83,7 +90,7 @@ const ChatItem = ({
                 <Box
                   sx={{
                     marginLeft: "0.5rem",
-                    border: "2px solid black",
+                    // border: "2px solid black",
                   }}
                 >
                   <Typography color={"black"}> {name} </Typography>
@@ -93,29 +100,35 @@ const ChatItem = ({
                 <Box
                   sx={{
                     marginLeft: "0.5rem",
-                    border: "2px solid black",
+                    // border: "2px solid black",
                   }}
                 >
-                  {console.log(lastMessage?.sender?.toString(), _id.toString())}
+                
                   {
-                    lastMessage?.sender?.toString() === _id.toString() 
-                      ? (
-                        <Stack direction={"row"} spacing={"0.5rem"} >
-                          <DoneAllRoundedIcon />
-                          <Typography> {lastMessage?.content}  </Typography>
+                    (!senderId || !receiverId) ? (
+                      <Typography fontSize="14px" color="text.secondary"> No messages yet — say hi 👋 </Typography>
+                    ) : (
+                      (senderId?.toString() === user?._id?.toString()) ? (
+                        <Stack direction="row" spacing="0.5rem" alignItems="center">
+                          <DoneAllRoundedIcon fontSize="small" color="primary" />
+                          <Typography fontSize="14px"> {lastMessage?.content} </Typography>
                         </Stack>
-                      ) 
-                      : (
-                        <Stack direction={"row"} spacing={"0.5rem"}>
-                          <CallReceivedRoundedIcon />
-                          <Typography> {lastMessage?.content}  </Typography>
+                      ) : (
+                        <Stack direction="row" spacing="0.5rem" alignItems="center">
+                          <CallReceivedRoundedIcon fontSize="small" color="success" />
+                          <Typography fontSize="14px"> {lastMessage?.content} </Typography>
                         </Stack>
                       )
+                    )
                   }
+
                 </Box>
-
-
             </Stack>
+
+                {/* Todo: add the timestamp fro the last message */}
+                <Typography sx={{ fontSize: "0.9rem" }}> { formatChatTime(lastMessage?.createdAt) } </Typography>
+
+
           </Stack>
 
 

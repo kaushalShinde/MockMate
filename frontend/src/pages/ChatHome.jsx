@@ -10,6 +10,7 @@ const ChatHome = () => {
     <Stack
         bgcolor="yellow"
         height={"99%"}
+        className={"home-background"}
         sx={{
           justifyContent: "center",
           alignItems: "center",

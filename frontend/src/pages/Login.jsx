@@ -21,8 +21,12 @@ const Login = () => {
   const dispatch = useDispatch();
 
 
-
   const [isLogin, setIsLogin] = useState(true);
+  
+  const [email, setEmail] = useState("");
+  const [otp, setOtp] = useState("");
+  const [otpSent, setOtpSent] = useState(false);
+
 
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
@@ -39,7 +43,7 @@ const Login = () => {
 
 
   const handleImageInputChange = (e) => {
-    const file = e.target.files[0];
+    // const file = e.target.files[0];
 
     // if (file) {
     //   const reader = new FileReader();
@@ -49,10 +53,44 @@ const Login = () => {
     //   reader.readAsDataURL(file);
     // }
 
-    if (file) {
+    // if (file) {
+    //   setAvatar(file);
+    //   setAvatarPreview(URL.createObjectURL(file));
+    // }
+
+    const file = e.target.files[0];
+    if (!file) {
+      toast.error(`Please select the Profile Picture`);
+      return;
+    }
+  
+    const validTypes = ['image/jpeg', 'image/png', 'image/webp'];
+    const maxSize = 5 * 1024 * 1024; // 5MB
+  
+    if (!validTypes.includes(file.type)) {
+      toast.error('Only JPEG, PNG, and WEBP images are allowed.');
+      return;
+    }
+  
+    if (file.size > maxSize) {
+      toast.error('Image size should not exceed 5MB.');
+      return;
+    }
+  
+    const img = new Image();
+    img.onload = () => {
+  
+      // All validations passed
       setAvatar(file);
       setAvatarPreview(URL.createObjectURL(file));
-    }
+    };
+  
+    img.onerror = () => {
+      toast.error('Invalid image file.');
+    };
+  
+    img.src = URL.createObjectURL(file);
+
   };
 
   const handleLogin = async (e) => {
@@ -86,6 +124,12 @@ const Login = () => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
+
+    
+    if (!avatar) {
+      toast.error("Please upload a profile picture.");
+      return;
+    }
 
     const formData = new FormData();
     formData.append('name', name);

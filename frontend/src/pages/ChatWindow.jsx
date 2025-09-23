@@ -1,5 +1,5 @@
 
-import { AppBar, Avatar, Box, IconButton, Menu, MenuItem, Stack, Toolbar, Typography } from '@mui/material';
+import { AppBar, Avatar, Box, Divider, IconButton, Menu, MenuItem, Stack, Toolbar, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -296,7 +296,18 @@ const ChatWindow = () => {
                 loader={<h4>Loading...</h4>}
                 endMessage={
                   <p style={{ textAlign: 'center' }}>
-                    <b>Yay! You have seen it all</b>
+                    {/* <b>Yay! You have seen it all</b> */}
+                    <Divider 
+                      sx={{
+                        borderBottomWidth: "2px",   // thickness
+                        width: "20rem",              // short line
+                        margin: "1rem auto",
+                        backgroundColor: "#bbb"
+                      }}
+                    />
+                    {/* <Divider textAlign="center" sx={{ margin: "1rem 0", color: "#666", fontSize: "0.9rem" }}>
+                      End
+                    </Divider> */}
                   </p>
                 }
             >

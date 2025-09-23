@@ -11,8 +11,11 @@ import { pinkWhite } from '../constants/colors';
 import { server } from '../constants/config';
 import PostItemDialogBox from '../dialogs/PostItemDialogBox';
 import { samplePostsData } from '../library/sampleData';
+import { useSelector } from 'react-redux';
+
 
 const Home = () => {
+  // const { postDialogBox, post } = useSelector((state) => state.post);
 
   const [posts, setPosts] = useState(samplePostsData);
   useEffect(() => {
@@ -46,9 +49,9 @@ const Home = () => {
       <Grid
         container
         height={"calc(99vh - 4rem)"}
+        className={"home-background"} // bg color animation- like aws 
         sx={{
           overflow: 'hidden',
-          
         }}
       >
 
@@ -67,8 +70,8 @@ const Home = () => {
             height: '100%',
             // backgroundColor: "#B8FFF9",
             
-            background: 'linear-gradient(160deg, #C3F8FF, #ABD9FF)',
-            border: "2px solid black",
+            // background: 'linear-gradient(160deg, #C3F8FF, #ABD9FF)',
+            // border: "2px solid black",
           }}
         >
 
@@ -87,8 +90,8 @@ const Home = () => {
               xs: 'block',
             },
             height: '100%',
-            // border: "2px solid black",
-            bgcolor: "#F3F8FF",
+            // border: "1px solid black",
+            // bgcolor: "#F3F8FF",
           }}
         >
           <PostList />
@@ -108,8 +111,8 @@ const Home = () => {
               sm: 'block',
             },
             height: '100%',
-            border: "2px solid black",
-            background: 'linear-gradient(160deg, #EEF5FF, #DDDDDD)',
+            // background: 'linear-gradient(160deg, #EEF5FF, #DDDDDD)',
+            // border: "2px solid black",
           }}
         >
 

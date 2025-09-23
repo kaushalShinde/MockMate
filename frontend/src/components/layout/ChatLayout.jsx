@@ -115,7 +115,7 @@ const ChatLayout = () => {
                             lg: "block",
                             xl: "block",
                         },
-                        border: "2px solid black",
+                        border: "2px solid #9e9e9e",
                     }}
                     height={"100%"}
                 >

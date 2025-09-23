@@ -33,6 +33,12 @@ const NotificationList = () => {
           toast.error(error?.response?.data);
       }
   }
+
+  const removeNotificationFromList = (id) => {
+    setNotifications((prev) => prev.filter((notification) => notification._id !== id));
+  };
+  
+
   useEffect(() => {
      getNotifications(); 
   }, [])
@@ -48,7 +54,7 @@ const NotificationList = () => {
         >
           {notifications.length > 0 ? (
 
-            notifications.map(({_id, user, category, notification, requestId=null, status}) => {
+            notifications.map(({_id, user, category, notification, requestId=null, status, createdAt}) => {
               
               return <NotificationItem 
                 key={_id}
@@ -58,6 +64,8 @@ const NotificationList = () => {
                 notification={notification}
                 requestId={requestId}
                 status={status}
+                createdAt={createdAt}
+                onRemove={removeNotificationFromList}
               />
             })
           ) : (

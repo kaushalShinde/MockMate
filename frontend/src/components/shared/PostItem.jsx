@@ -5,16 +5,19 @@ import { Avatar, Box, Stack, Typography, useMediaQuery } from '@mui/material';
 import { formatDate, setTitleFont } from '../../library/functions';
 import PostItemDialogBox from '../../dialogs/PostItemDialogBox';
 import { useDispatch, useSelector } from 'react-redux';
-import { setPostDialogBox } from '../../redux/reducers/misc';
+import { setPostDialogBox, setPost, setPostLikedByUser, setPostLikedColor, setFriendRequestSent, setIsPostCreatorFriendAlready, setPostLikesCount, resetPostState } from '../../redux/reducers/post';
+import axios from 'axios';
+import { server } from '../../constants/config';
 
-
-const PostItem = ({post}) => {
+const PostItem = ({ postData }) => {
     // console.log('rendered componenet - postItem');
-    // console.log(post);
+    
     const dispatch = useDispatch();
+    
+    const { user } = useSelector((state) => state.auth);
 
-    // for post item dialog box
-    const { postDialogBox } = useSelector((state) => state.misc);
+    // for post item dialog box - 'post' redux state
+    const { postDialogBox, post, postLikedByUser, postLikedColor, friendRequestSent, isPostCreatorFriendAlready } = useSelector((state) => state.post);
 
     // For the responsiveness of app
     const [titleLimit, setTitleLimit] = useState(30);
@@ -42,17 +45,60 @@ const PostItem = ({post}) => {
     // }, [screen11300px, screen1150px, screen900px, screen700px, screen600px, screen500px, screen300px])
 
 
-    const handlePostDialogOpen = () => {
-        console.log(post);
-        dispatch(setPostDialogBox(post));
+    const isPostCreatorFriendHelper = async ( postData ) => {
 
+        if(!postData) { 
+            return;
+        }
+        
+        try{
+            const response = await axios.get(`${server}/api/v1/user/isfriend/${postData?.creator?._id}`, {
+                withCredentials: true,
+            })
+
+            console.log(" isPostCreatorFriendHelper ", response?.data);
+            if(response?.data?.request){
+                dispatch(setFriendRequestSent(true));
+            }
+            if(response?.data?.isFriend) {
+                dispatch(setIsPostCreatorFriendAlready(true));
+            }
+        }
+        catch(error) {
+            // console.log(error?.response?.data?.message)
+            // toast.error(error?.response?.data?.message || "Something went Wrong");
+        }
+    }
+
+    const handlePostDialogOpen = async () => {
+        console.log("####################################")
+        console.log(postData);
+
+        // todo 
+        // take logged user from redux
+
+        dispatch(setPostDialogBox(true));       // open dialog
+        dispatch(setPost(postData));                 // set current post
+        dispatch(setPostLikesCount(postData?.likes?.length || 0));       // set likes count
+        dispatch(setPostLikedByUser(postData?.likes?.includes(user?._id) ? 1 : 0));  // liked by user
+        dispatch(setPostLikedColor(postData?.likes?.includes(user?._id) ? "yellow" : "grey")); // like color
+
+        // todo
+        // call api here only to check if friends
+        await isPostCreatorFriendHelper(postData);
+
+        // dispatch(setFriendRequestSent(false));   // reset friend request sent
+        // dispatch(setIsPostCreatorFriendAlready(false)); // reset friendship status
+        
         console.log('handlePostDialogOpen', postDialogBox);
     }
     const handlePostDialogClose = () => {
-        dispatch(setPostDialogBox(null));
+        dispatch(resetPostState());
         
         console.log('handlePostDialogClose', postDialogBox);
     }
+
+
 
   return (
     <>
@@ -68,9 +114,12 @@ const PostItem = ({post}) => {
       <Box
         sx={{
             // display: "flex",
-            border: "2px solid black",
-            // borderRadius: "5px",
-            // margin: "2px 0",
+            border: "1px solid purple",
+            borderRadius: "5px",
+            margin: "5px 0",
+            // background: 'linear-gradient(175deg, #E5D9F2, #F5EFFF, #E5D9F2)',
+            background: "#E8F9FF",
+            // background: "transparent",
         }}
         onClick={handlePostDialogOpen}
       >
@@ -87,9 +136,10 @@ const PostItem = ({post}) => {
                     // marginTop: '1rem',
                     marginLeft: '1rem',
                     marginRight: '1.6rem',
+                    border: "1px solid black",
                     cursor: "pointer",
                 }}
-                src={post?.creator?.avatar?.url}     
+                src={postData?.creator?.avatar?.url}     
             />
 
             {/* The Middle part of the post Item (used more stack to just align in way) */}
@@ -108,7 +158,7 @@ const PostItem = ({post}) => {
                 <Typography
                     variant="h5" 
                     sx={{
-                        fontSize: "1.5rem",
+                        fontSize: "1.2rem",
                         fontWeight: 'bold',
                         marginTop: "0.5rem",
                         cursor: "pointer",
@@ -116,7 +166,7 @@ const PostItem = ({post}) => {
                         whiteSpace: "nowrap",
                     }}
                 >
-                    { post?.title + '...' }
+                    { postData?.title }
                 </Typography>
                 
 
@@ -131,7 +181,7 @@ const PostItem = ({post}) => {
                             cursor: "pointer",
                             // borderBottom: "1px solid purple",
                         }}
-                    > {post?.creator?.username} {""} </Typography>
+                    > {postData?.creator?.username} {""} </Typography>
 
                     {/* Post time ago */}
                     <Typography
@@ -142,7 +192,7 @@ const PostItem = ({post}) => {
                             marginLeft: '0.5rem',
                             // borderBottom: "1px solid purple",
                         }}
-                    > {""} Created At: { formatDate(post?.createdAt)} </Typography>
+                    > {""} Created At: { formatDate(postData?.createdAt)} </Typography>
 
                 </Stack>
             </Stack>

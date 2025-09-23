@@ -1,5 +1,6 @@
 
 
+import { differenceInHours, format } from "date-fns";
 
 export const checkInvalidString = (input) => {
     const invalidCharsPattern = /[^A-Za-z0-9_]/;
@@ -126,6 +127,7 @@ export const fileFormat = (url) => {
 };
 
 
+
 // in chat we do not have to show hd image 
 // so we transform it to less width
 // add this in cloudinary url after /upload => /dpr_auto/w_200
@@ -137,3 +139,21 @@ export const transformImage = (url="", width=100) => {
 
     return newUrl;
 }
+
+
+export const formatChatTime = (date) => {
+  if (!date) return "";
+
+  const msgDate = new Date(date);
+  const hoursDiff = differenceInHours(new Date(), msgDate);
+
+  if (hoursDiff < 24) {
+    // Within 24 hrs → show hh:mm (24-hour) or hh:mm a (12-hour)
+    // return format(msgDate, "HH:mm");     // Example: "14:35"
+    return format(msgDate, "hh:mm a"); // Example: "02:35 pm"
+  } else {
+    // Else → show day/month
+    return format(msgDate, "dd/MM");     // Example: "20/09"
+  }
+};
+

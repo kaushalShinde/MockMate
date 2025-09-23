@@ -42,7 +42,7 @@ const ChatHeader = () => {
   const handleMeetOpen = () => {
     console.log('handleMeetOpen', selectedChat, user);
 
-    const roomId = "123456";
+    const roomId = Math.floor(100000 + Math.random() * 900000).toString();
     // const request = {
     //   sender: user,
     //   receiver: selectedChat,
@@ -113,14 +113,14 @@ const ChatHeader = () => {
       sx={{
         display: "flex",
         alignItems: "center",
-        border: "2px solid black",
+        // border: "2px solid black",
 
       }}
     >
       <AppBar
         position="static"
         sx={{
-          border: "2px solid black",
+          // border: "2px solid black",
           // background: 'linear-gradient(160deg, #C80036, #0C1844)',
           background: 'linear-gradient(160deg, #FFFED3, #BBE9FF, #B1AFFF)',
           // background: 'linear-gradient(160deg, #C80036, #2B2E4A)',
@@ -134,6 +134,7 @@ const ChatHeader = () => {
               height: "3rem",
               width: "3rem",
               cursor: "pointer",
+              border: "1px solid #9e9e9e",
             }}
             onClick={handleProfileClick}
           />
@@ -144,7 +145,7 @@ const ChatHeader = () => {
             sx={{
               color: "black",
               marginLeft: "1rem",
-              border: "2px solid black",
+              // border: "1px solid #ccc",
             }}
             onClick={handleProfileClick}
           >
@@ -171,7 +172,7 @@ const ChatHeader = () => {
 
 
           {/* This is for the middle void space */}
-          <Box flexGrow={8} sx={{ border: "2px solid black" }} />
+          <Box flexGrow={8} sx={{ /* border: "2px solid black" */ }} />
 
 
           {/* To show the meet button */}

@@ -1,10 +1,10 @@
 
 
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { AppBar, Avatar, Badge, Box, Button, IconButton, Menu, MenuItem, Stack, Toolbar, Typography, useMediaQuery } from '@mui/material';
-import { ChatRounded as ChatIcon, MenuRounded as MenuRoundedIcon, Notifications as NotificationIcon } from '@mui/icons-material'
+import { ChatRounded as ChatIcon, Home as HomeIcon, MenuRounded as MenuRoundedIcon, Notifications as NotificationIcon } from '@mui/icons-material'
 import { orange } from '../../constants/colors.js';
 import miscSlice, { setIsMobileScreen } from '../../redux/reducers/misc.js';
 import CreatePostDialog from '../../dialogs/CreatePostDialog.jsx';
@@ -19,6 +19,7 @@ import NotificationList from '../specific/NotificationList.jsx';
 const Header = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const location = useLocation();
 
     const { isMobileScreen } = useSelector((state) => state.misc);
     // const mobileScreen = useMediaQuery('(max-width: 599px)');
@@ -59,7 +60,14 @@ const Header = () => {
         }
     }
       
-    const handleFriends = () => {navigate('/chats')}
+    const handleChatHomeClick = () => {
+        // navigate('/chats')
+        if (location.pathname === "/") {
+          navigate("/chats");
+        } else if (location.pathname === "/chats") {
+          navigate("/");
+        }
+    }
 
     const handleNotificationAnchor = (event) => {
         setAnchorElNotification(event.currentTarget);
@@ -154,16 +162,16 @@ const Header = () => {
                             />
 
                             {
-                                user && (
+                                user && ( 
                                     <IconButton
                                         sx={{
                                             color: "white",
                                             flexGrow: "1",
                                             // marginRight: "1rem",
                                         }}
-                                        onClick={handleFriends}
+                                        onClick={handleChatHomeClick}
                                     >
-                                        <ChatIcon />
+                                        {location.pathname === "/" ? <ChatIcon /> : <HomeIcon />}
                                     </IconButton>
                                 )
                             }
@@ -188,6 +196,7 @@ const Header = () => {
                                         </Badge>
                                     </IconButton>
 
+
                                     {/* Notification Menu */}
                                     <Menu
                                         anchorOrigin={{
@@ -203,7 +212,20 @@ const Header = () => {
                                         open={Boolean(anchorElNotification)}
                                         onClose={handleCloseNotificationMenu}
                                     >
-                                        <NotificationList />
+                                        <Box
+                                            sx={{
+                                                maxHeight: "500px",
+                                                overflowY: "auto",
+                                                border: "1px solid #ccc",     
+                                                backgroundColor: "#D9E0FF",                            
+                                                scrollbarWidth: "none", // Firefox
+                                                '&::-webkit-scrollbar': {
+                                                    display: 'none',       // Chrome, Safari
+                                                },
+                                            }}
+                                        >
+                                            <NotificationList />
+                                        </Box>
                                     </Menu>
                                     
                                 </>)

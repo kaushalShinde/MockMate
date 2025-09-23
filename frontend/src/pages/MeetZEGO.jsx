@@ -18,11 +18,11 @@ const MeetZEGO = () => {
     console.log(meetRequest);
 
     const zegoMeeting = async (element) => {
-        const appID = 1641101271;
-        const serverSecret = "9c3d6900fa9b98c537a09f8195481a95";
+        const appID = 154091566; //process.env.REACT_APP_ZEGO_appID;
+        const serverSecret = "3aa316246a9df27166aa51435e0f3570"; //process.env.REACT_APP_ZEGO_serverSecret;
         const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(appID, serverSecret, roomId, user?._id, user?.name);
         const zegoInstance = ZegoUIKitPrebuilt.create(kitToken);
-        zegoInstance.joinRoom({
+        zegoInstance?.joinRoom({
             container: element,
             scenario: {
                 mode: ZegoUIKitPrebuilt.OneONoneCall,

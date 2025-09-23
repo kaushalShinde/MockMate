@@ -16,9 +16,20 @@ const schema = new Schema({
         required: true,
         // select: false,
     },
+    email: {
+      type: String,
+      required: true,
+      unique: true, 
+      lowercase: true,
+      trim: true,      // removes whitespace
+      match: [
+        /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+        "Please provide a valid email address",
+      ],
+    },
     bio: {
         type: String,
-        required: true,
+        // required: true,
     },
     organization: {
         type: String,

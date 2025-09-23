@@ -1,6 +1,6 @@
 
 import express from 'express';
-import { newUser, login, getMyProfile, getOtherUserProfile, logout, sendFriendRequest, acceptFriendRequest, rejectFriendRequest, getAllNotifications, getMyFriends, checkIsFriendAlready, getAllMessages, sendAttachments } from '../controllers/userControllers.js';
+import { newUser, login, getMyProfile, getOtherUserProfile, logout, sendFriendRequest, acceptFriendRequest, rejectFriendRequest, getAllNotifications, markNotificationRead, getMyFriends, checkIsFriendAlready, getAllMessages, sendAttachments } from '../controllers/userControllers.js';
 import { isAuthenticated } from '../middlewares/auth.js';
 import { attachmentsMulter, singleAvatar } from '../middlewares/multer.js';
 
@@ -22,6 +22,7 @@ app.get('/me', isAuthenticated, getMyProfile);
 app.get("/logout", isAuthenticated, logout);
 
 
+
 // friend requests
 app.put('/sendrequest', isAuthenticated, sendFriendRequest);
 
@@ -31,7 +32,10 @@ app.put('/rejectrequest', isAuthenticated, rejectFriendRequest);
 
 
 // notifications
+app.put('/readNotification', isAuthenticated, markNotificationRead);
+
 app.get('/notifications', isAuthenticated, getAllNotifications);
+
 
 
 // Get all the friends with their last message 

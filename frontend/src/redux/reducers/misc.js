@@ -4,19 +4,20 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     isChatDrawerOpen: false,
     isMobileScreen: false,
-    postDialogBox: null,
+    // postDialogBox: null,
     isFileMenu: false,
     isUploadingLoader: false,
     refetchPostList: false,
+    postAddedByMe: null,
 }
 
 const miscSlice = createSlice({
     name: "misc",
     initialState: initialState,
     reducers: {
-        setPostDialogBox: (state, action) => {
-            state.postDialogBox = action.payload;
-        },
+        // setPostDialogBox: (state, action) => {
+        //     state.postDialogBox = action.payload;
+        // },
         setIsMobileScreen: (state, action) => {
             state.isMobileScreen = action.payload;
         },
@@ -32,17 +33,21 @@ const miscSlice = createSlice({
         setRefetchPostList: (state, action) => {
             state.refetchPostList = action.payload;
         },
+        setPostAddedByMe: (state, action) => {
+            state.postAddedByMe = action.payload;
+        },
     },
 })
 
 export default miscSlice;
 export const {
-    setPostDialogBox,
+    // setPostDialogBox,
     setIsChatDrawerOpen,
     setIsMobileScreen,
     setIsFileMenu,
     setIsUploadingLoader,
     setRefetchPostList,
+    setPostAddedByMe,
 } = miscSlice.actions;
 
 

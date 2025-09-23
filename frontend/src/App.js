@@ -12,6 +12,7 @@ import ChatWindow from './pages/ChatWindow';
 import Chats from './pages/ChatWindow';
 import Home from './pages/Home';
 import Login from './pages/Login';
+import Login1 from './pages/Login1';
 import Meet from './pages/Meet';
 import PageNotFound from './pages/PageNotFound';
 import Profile from './pages/Profile';
@@ -24,6 +25,7 @@ import { server } from './constants/config';
 import MeetRequestDialog from './dialogs/MeetRequestDialog';
 import MeetConfirmDialog from './dialogs/MeetConfirmDialog';
 import MeetZEGO from './pages/MeetZEGO';
+import Register from './pages/Register';
 
 
 
@@ -93,7 +95,16 @@ const App = () => {
             path='/login'
             element={
               <ProtectedRoute user={!user} redirect={"/"} >
-                <Login />
+                <Login1 />
+              </ProtectedRoute>
+            }
+          />
+          
+          <Route 
+            path='/register'
+            element={
+              <ProtectedRoute user={!user} redirect={"/"} >
+                <Register />
               </ProtectedRoute>
             }
           />

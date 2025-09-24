@@ -29,12 +29,12 @@ const MessageComponent = ({message, user}) => {
 
                 <div
                     style={{
-                        // backgroundColor: "#F8DE22",
-                        // backgroundColor: "#D2DE32",
-                        backgroundColor: "#FF7F3E",
+                        // backgroundColor: "#FDFFC2",
+                        backgroundColor: "#211951",
+                        // backgroundColor: "#27005D",
 
-                        color: "black",
-                        border: "2px solid black",
+                        color: "white",
+                        border: "1px solid black",
                         borderRadius: "0.5rem",
                         margin: "0.2rem",
                         padding: "0.5rem",
@@ -70,6 +70,7 @@ const MessageComponent = ({message, user}) => {
                         sx={{
                             display: "flex",
                             alignSelf: "flex-end",
+                            color: "beige",
                         }}
                     > {timeAgo} </Typography>
                 </div>

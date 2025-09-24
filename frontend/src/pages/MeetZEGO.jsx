@@ -49,7 +49,10 @@ const MeetZEGO = () => {
 
   return (
     <>
-      <div ref = {zegoMeeting} />
+      <div 
+        ref = {zegoMeeting} 
+        style={{ width: "100%", height: "100vh", overflow: "hidden" }}
+      />
     </>
   )
 }

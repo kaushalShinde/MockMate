@@ -8,7 +8,9 @@ build/
 t.txt 
 todo.txt 
 zTxt.txt 
+resumeTxt.txt
 
+.VSCodeCounter
 
 # Logs
 npm-debug.log*

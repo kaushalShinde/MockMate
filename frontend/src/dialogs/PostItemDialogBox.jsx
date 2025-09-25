@@ -6,7 +6,7 @@ import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { grey, lightYellow, white } from '../constants/colors';
 import { server } from '../constants/config';
 import { setPostDialogBox, setPost, setPostLikesCount, setPostLikedByUser, setPostLikedColor, setFriendRequestSent, setIsPostCreatorFriendAlready, resetPostState } from '../redux/reducers/post';
@@ -19,7 +19,27 @@ const PostItemDialogBox = () => {
 
     const { user } = useSelector((state) => state.auth);
 
-    const { postDialogBox, post, postLikesCount, postLikedByUser, postLikedColor, friendRequestSent, isPostCreatorFriendAlready } = useSelector((state) => state.post);
+    // instead of direct taking the elements from store, we optimally takeusing shallow equal(it didn't make copy of object every time)
+
+    // const { postDialogBox, post, postLikesCount, postLikedByUser, postLikedColor, friendRequestSent, isPostCreatorFriendAlready } = useSelector((state) => state.post);
+    const {
+        postDialogBox,
+        post,
+        postLikesCount,
+        postLikedByUser,
+        postLikedColor,
+        friendRequestSent,
+        isPostCreatorFriendAlready
+    } = useSelector((state) => ({
+        postDialogBox: state.post.postDialogBox,
+        post: state.post.post,
+        postLikesCount: state.post.postLikesCount,
+        postLikedByUser: state.post.postLikedByUser,
+        postLikedColor: state.post.postLikedColor,
+        friendRequestSent: state.post.friendRequestSent,
+        isPostCreatorFriendAlready: state.post.isPostCreatorFriendAlready
+    }), shallowEqual);
+
     
     console.log('rendered componenet - postItemDialogBox', postDialogBox);
 
@@ -35,11 +55,15 @@ const PostItemDialogBox = () => {
     // now only keep add friend and like toggle call in this box, remove other states
 
 
+
+
     useEffect(() => {
-        console.log("##################", friendRequestSent, isPostCreatorFriendAlready);
+        // console.log("##################", friendRequestSent, isPostCreatorFriendAlready);
         // console.log(postDialogBox);
         // setPost(postDialogBox);
-        console.log(post);
+        // console.log(post);
+
+        if (!postDialogBox || !post) return;
 
         // todo
         // axios request to increment view REFETCH POSTS socket
@@ -63,7 +87,8 @@ const PostItemDialogBox = () => {
             })
 
 
-    }, [postDialogBox, dispatch]);
+        }, [postDialogBox, post]);
+    // }, [postDialogBox, dispatch]); // this isn't optimal, dispatch shouldn't be there
 
 
     // useEffect(() => {
@@ -207,6 +232,11 @@ const PostItemDialogBox = () => {
     // }, [post]);
       
 
+    // componenet optimization - its below, coz all the react hook should be on top of all the condionals
+    if(!postDialogBox) {
+        return;
+    }
+
   return (
     <>
       <Dialog
@@ -335,4 +365,4 @@ const PostItemDialogBox = () => {
   )
 }
 
-export default PostItemDialogBox;
+export default React.memo(PostItemDialogBox);

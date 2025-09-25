@@ -1,35 +1,37 @@
 
 
-import { useMediaQuery } from '@mui/material';
-import React, { useEffect } from 'react';
-import toast, { Toaster } from "react-hot-toast";
+import React, { Suspense, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import axios from 'axios';
+import { SocketProvider } from './socket';
+import { useMediaQuery } from '@mui/material';
+import toast, { Toaster } from "react-hot-toast";
+
 import ProtectedRoute from './components/auth/ProtectedRoute';
-import ChatLayout from './components/layout/ChatLayout';
 import ChatHome from './pages/ChatHome';
-import ChatWindow from './pages/ChatWindow';
 import Chats from './pages/ChatWindow';
-import Home from './pages/Home';
 import Login from './pages/Login';
 import Login1 from './pages/Login1';
 import Meet from './pages/Meet';
 import PageNotFound from './pages/PageNotFound';
 import Profile from './pages/Profile';
 import TempDrawer from './pages/TempDrawer';
-import { setIsMobileScreen } from './redux/reducers/misc';
-import { userExists, userNotExists } from './redux/reducers/auth';
-import { SocketProvider } from './socket';
-import axios from 'axios';
-import { server } from './constants/config';
+
 import MeetRequestDialog from './dialogs/MeetRequestDialog';
 import MeetConfirmDialog from './dialogs/MeetConfirmDialog';
 import MeetZEGO from './pages/MeetZEGO';
 import Register from './pages/Register';
 
+import { setIsMobileScreen } from './redux/reducers/misc';
+import { userExists, userNotExists } from './redux/reducers/auth';
+import { server } from './constants/config';
 
-
-
+import ChatLayout from './components/layout/ChatLayout';
+import ChatWindow from './pages/ChatWindow';
+import HomeLoader from './loaders/HomeLoader';
+// import Home from './pages/Home';
+const Home = React.lazy(() => import('./pages/Home'));
 
 const App = () => {
   const dispatch = useDispatch();
@@ -37,7 +39,11 @@ const App = () => {
   const { user, loader } = useSelector((state) => state.auth);
 
   const mobileScreen = useMediaQuery('(max-width: 599px)');
-  dispatch(setIsMobileScreen(mobileScreen));
+  // dispatch(setIsMobileScreen(mobileScreen));
+    
+  useEffect(() => {
+    dispatch(setIsMobileScreen(mobileScreen));
+  }, [mobileScreen, dispatch]);
 
   useEffect(() => {
 
@@ -73,7 +79,16 @@ const App = () => {
 
           {/* Main Home Page => anyone can access */}
           {/* <Route path='/' element={ <Home /> } /> */}
-          <Route path='/' element={ <Home /> } />
+
+          <Route
+            path="/"
+            element={
+              <Suspense fallback={<HomeLoader />}>
+                <Home />
+              </Suspense>
+            }
+          />
+
           <Route path="/profile/:username" element={ <Profile /> } />
 
           {/* Protected Routes => showed only if the user is logged in */}

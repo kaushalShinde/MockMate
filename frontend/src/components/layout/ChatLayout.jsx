@@ -12,51 +12,60 @@ import ChatList from "../specific/ChatList";
 import Header from "./Header";
 import axios from "axios";
 import { server } from "../../constants/config";
+import ChatListLoader from "../../loaders/ChatListLoader";
+import { useCallback } from "react";
 
 const ChatLayout = () => {
     const params = useParams();
     const dispatch = useDispatch();
 
+    const [loading, setLoading] = useState(true);
     const [allChats, setAllChats] = useState([]);
     const [onlineUsers, setOnlineUsers] = useState([]);
     const { isMobileScreen } = useSelector((state) => state.misc);
     const { selectedChat } = useSelector((state) => state.chat);
 
-    const isLoading = false;
 
+    const getAllChats = useCallback(async () => {
+        try {
+
+            const response = await axios.get(`${server}/api/v1/user/friends`, { withCredentials: true });
+            // console.log(response?.data?.chats);
     
-    useEffect(() => {
-        getAllChats();
-    }, []);
+            response?.data?.chats?.map((chat) => {
+                const time1 = new Date();
+                const time2 = new Date(chat?.users[0]?.lastActive);
+    
+                const timeDiff = Math.abs(time1.getTime() - time2.getTime()) / (1000 * 60);
+                if(timeDiff <= 2) {
+                    setOnlineUsers((prev) =>  [...prev, chat?.users[0]?._id]);
+                }
+            })
+            
+            setAllChats(response?.data?.chats);
+        } catch (err) {
+            console.log(err);
 
-    const getAllChats = async () => {
-        const response = await axios.get(`${server}/api/v1/user/friends`, { withCredentials: true });
-        // console.log(response?.data?.chats);
+        } finally {
+            setLoading(false);
+        }
+    }, [])
 
-        response?.data?.chats?.map((chat) => {
-            const time1 = new Date();
-            const time2 = new Date(chat?.users[0]?.lastActive);
-
-            const timeDiff = Math.abs(time1.getTime() - time2.getTime()) / (1000 * 60);
-            if(timeDiff <= 2) {
-                setOnlineUsers((prev) =>  [...prev, chat?.users[0]?._id]);
-            }
-        })
-        
-        setAllChats(response?.data?.chats);
-    }
     const { isChatDrawerOpen } = useSelector((state) => state.misc);
     const toggleDrawer = () => {
         console.log("toggle");
         dispatch(setIsChatDrawerOpen(!isChatDrawerOpen));
     }
     
+    useEffect(() => {
+        getAllChats();
+    }, []);
 
     return (
         <>
 
             {
-                isMobileScreen && (
+                (isMobileScreen) && (
                     <IconButton 
                         onClick={toggleDrawer}
                         sx={{
@@ -64,7 +73,7 @@ const ChatLayout = () => {
                             top: "0.5rem",
                             left: "1rem",
                             zIndex: 9999,
-                            border: "2px solid black",
+                            border: "1px solid white",
                         }}
                     >
                         <MenuRoundedIcon  />
@@ -77,8 +86,8 @@ const ChatLayout = () => {
 
 
             {
-                isLoading ? (
-                    <Skeleton />
+                (isMobileScreen && loading) ? (
+                    <ChatListLoader w={"50vh"} />
                 ) : (
                     
                     <SwipeableDrawer
@@ -119,12 +128,16 @@ const ChatLayout = () => {
                     }}
                     height={"100%"}
                 >
-                    <ChatList
-                        chats={allChats}
-                        newMessageAlert={[]}
-                        onlineUsers={onlineUsers}
-                    />
-
+                    {loading ? (
+                        <ChatListLoader />
+                    ) : (
+                        <ChatList
+                            chats={allChats}
+                            newMessageAlert={[]}
+                            onlineUsers={onlineUsers}
+                        />
+                    )}
+                    
                 </Grid>
 
                 {/* selectedChat is determined/ taken from redux store (todo) */}

@@ -184,5 +184,5 @@ const NotificationItem = ({_id, user, category, notification, requestId=null, st
     )
 }
 
-export default NotificationItem;
+export default React.memo(NotificationItem);
 

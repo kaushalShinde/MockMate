@@ -100,7 +100,7 @@ const Header = () => {
                     sx={{
                         // bgcolor: orange,
                         background: 'linear-gradient(160deg, #1E0342, #070F2B)',
-                        border: '2px solid black',
+                        // border: '2px solid black',
                     }}
                 >
                     
@@ -295,13 +295,13 @@ const Header = () => {
                                                 fontFamily="sans-serif"
                                                 sx={{
                                                     display: "block",
-                                                    color: "black",
+                                                    color: "white",
                                                     cursor: "pointer"
                                                 }}
                                                 onClick={() => {
                                                     navigate("/login");
                                                 }}
-                                            > Login  </Typography>
+                                            > login  </Typography>
                                         </Stack>
 
 

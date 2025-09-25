@@ -219,4 +219,4 @@ const PostItem = ({ postData }) => {
   )
 }
 
-export default PostItem;
+export default React.memo(PostItem);

@@ -1,6 +1,6 @@
 
 
-import { Stack } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 import React, { useState, useEffect, useCallback } from 'react';
 import PostItem from '../shared/PostItem';
 import axios from 'axios';
@@ -12,12 +12,18 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPostAddedByMe } from '../../redux/reducers/misc';
 
+import PostLoader from '../../loaders/PostLoader';
+import ErrorMessage from '../../loaders/ErrorLoader';
+
 const PostList = () => {
 
     const socket = useSocket();
     const dispatch = useDispatch();
 
     const { refetchPostList, postAddedByMe } = useSelector((state) => state.misc);
+
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     const [posts, setPosts] = useState([]);
     const [page, setPage] = useState(1);
@@ -37,8 +43,12 @@ const PostList = () => {
 
             console.log("PostList: ", {posts, totalPages, totalPosts});
         } catch (err) {
+            setError(err?.response?.data?.message  || "Something went wrong");
             toast.error(err?.response?.data?.message || "Something went wrong");
+        } finally {
+            setLoading(false);
         }
+
     }, [page]);
 
 
@@ -76,6 +86,21 @@ const PostList = () => {
         }
         dispatch(setPostAddedByMe(null));
     }, [refetchPostList]);
+
+    // Loader until fetching posts
+    if(loading) {
+        return <PostLoader />
+    }
+    if(error) {
+        return <ErrorMessage retry={fetchPosts} message={error} />
+    }
+    if (loading === false && posts.length === 0) {
+        return (
+            <Stack alignItems="center" justifyContent="center" height="100%">
+                <Typography> No posts found. </Typography>
+            </Stack>
+        );
+    }
 
   return (
     <>

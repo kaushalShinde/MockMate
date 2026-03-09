@@ -337,7 +337,7 @@ const sendOTP_2FA = async(req, res) => {
         // Brevo Email sender
         await sendEmail({
             to: email,
-            subject: `@${username}, your OTP`,
+            subject: `@${user?.username}, your OTP`,
             text: `Your OTP is ${otp}.`
         });
 

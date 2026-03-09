@@ -26,14 +26,14 @@ import { NEW_MESSAGE } from "./constants/events.js";
 import { MessageSchema as Message } from "./models/messageSchema.js";
 import { ChatSchema as Chat } from "./models/chatSchema.js";
 
-import redis from "./redisClient.js";
-
 import AWS from 'aws-sdk';
 import mongoose from 'mongoose';
+import connectRedis from "./redisClient.js";
 
 
 
 const mongoURI = process.env.MONGODB_URI;
+const redisURL = process.env.REDIS_URL;
 const PORT = process.env.PORT || 8080;
 const userSocketIDs = new Map();
 
@@ -43,6 +43,9 @@ const app = express();
 
 // connect to the database
 connectDB(mongoURI);
+// connect redis cache
+connectRedis(redisURL);
+
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,

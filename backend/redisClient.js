@@ -1,3 +1,6 @@
+/*
+// AWS Elasticache Implementation (cost)
+
 import Redis from "ioredis";
 
 const redis = new Redis({
@@ -22,3 +25,34 @@ redis.on("error", (err) => {
 
 export default redis;
 
+*/
+
+
+
+
+import Redis from "ioredis";
+
+const connectRedis = (redisURL) => {
+  const redis = new Redis(redisURL, {
+    maxRetriesPerRequest: null,
+    retryStrategy(times) {
+      return Math.min(times * 500, 2000);
+    },
+  });
+
+  redis.on("connect", () => {
+    console.log(`Connected to Redis Cache\n`);
+  });
+
+  redis.on("ready", () => {
+    console.log("Redis Ready \n");
+  });
+
+  redis.on("error", (err) => {
+    console.error("### Redis Error: \n", err.message);
+  });
+
+  return redis;
+};
+
+export default connectRedis;

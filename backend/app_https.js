@@ -7,7 +7,7 @@ import https from "https";
 import http from "http";
 import path from "path";
 
-import connectDB from "./db.js";
+import connectDB from "./connection/db.js";
 import userRoute from './routes/userRoute.js';
 import postRoute from './routes/postRoute.js';
 

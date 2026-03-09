@@ -9,7 +9,7 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 
-import connectDB from "./db.js";
+import connectDB from "./connection/db.js";
 import userRoute from './routes/userRoute.js';
 import postRoute from './routes/postRoute.js';
 import testRoute from './routes/testRoute.js';

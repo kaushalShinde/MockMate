@@ -20,6 +20,7 @@ const emailApi = new SibApiV3Sdk.TransactionalEmailsApi();
 export async function sendEmail({ to, subject, text, html }) {
   try {
     console.log("sending brevo email");
+    console.log(`to: ${to} \n subject: ${subject}`)
 
     const email = {
       sender: {

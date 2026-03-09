@@ -1,0 +1,121 @@
+
+
+deleted chatHeader from chatWindow
+
+        <Box
+          height={"4rem"}
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            border: "2px solid black",
+          }}
+        >
+
+          <AppBar
+            position='static'
+            sx={{
+              border: '2px solid black',
+
+            }}
+          >
+            <Toolbar>
+              {/* To show profile pic */}
+              <Avatar 
+                src={selectedChat?.avatar?.url} 
+                sx={{
+                  height: "3rem",
+                  width: "3rem",
+                  cursor: "pointer",
+                }}
+                onClick={handleProfileClick}
+              />
+
+              {/* To show username and active status */}
+              <Stack
+                direction={"column"}
+                sx={{
+                  color: "black",
+                  marginLeft: "1rem",
+                  border: "2px solid black",
+                }}
+                onClick={handleProfileClick}
+              >
+
+                {/* <Typography> {selectedChat} </Typography> */}
+                <Typography
+                  sx={{
+                    fontSize: "1.2rem",
+                    cursor: "pointer",
+                  }}
+                > {selectedChat?.name} </Typography>
+                <Typography 
+                  sx={{
+                    fontSize: "0.8rem",
+                  }}
+                > 
+                  {
+                    selectedChat?.isOnline ? "Active now"
+                    : formatDateMinutes(selectedChat?.lastActive)
+                  } 
+                </Typography>
+              </Stack>
+
+
+              {/* This is for the middle void space */}
+              <Box flexGrow={8}  sx={{border: '2px solid black'}} />
+
+
+              {/* To show the meet button */}
+              <DuoIcon  
+                  sx={{
+                    color: "black",
+                    height: "2rem",
+                    width: "2rem",
+                    marginLeft: "1rem",
+                    alignSelf: "center",
+                    cursor: "pointer",
+                  }}
+                  onClick={handleMeetOpen}
+              />
+
+
+              {/* To show more options  */}
+              <Box flexGrow={1}>
+                  <IconButton onClick={handleOpenUserChatMenu}>
+                    <MoreHorizIcon 
+                        sx={{
+                          color: "black",
+                          height: "2rem",
+                          width: "2rem",
+                          marginLeft: "1rem",
+                          alignSelf: "center",
+                          cursor: "pointer",
+                        }}
+                    />
+                  </IconButton>
+
+                  <Menu
+                    anchorOrigin={{
+                      vertical: "bottom",
+                      horizontal: "right",
+                    }}
+                    keepMounted
+                    anchorEl={anchorElUser}
+                    open={Boolean(anchorElUser)}
+                    onClose={handleCloseUserChatMenu}
+                  >
+                    <MenuItem>
+                      <DeleteOutlineIcon />
+                      <Typography sx={{marginLeft: "0.5rem"}} onClick={handleClearChatMessages} > Clear Messages </Typography>
+                    </MenuItem>
+                    <MenuItem>
+                      <BlockRoundedIcon />
+                      <Typography sx={{marginLeft: "0.5rem"}} onClick={handleBlockChat} > Block </Typography>
+                    </MenuItem>
+
+                  </Menu>
+              </Box>
+            </Toolbar>
+          </AppBar>
+
+        </Box>

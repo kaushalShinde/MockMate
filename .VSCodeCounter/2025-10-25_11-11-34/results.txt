@@ -1,0 +1,157 @@
+Date : 2025-10-25 11:11:34
+Directory : g:\self\fullstack\mockmate-optimize
+Total : 97 files,  57159 codes, 848 comments, 1653 blanks, all 59660 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| JSON       |          7 |     50,424 |          0 |          5 |     50,429 |
+| JavaScript |         83 |      6,521 |        790 |      1,568 |      8,879 |
+| CSS        |          3 |        139 |         35 |         36 |        210 |
+| Markdown   |          1 |         38 |          0 |         33 |         71 |
+| HTML       |          1 |         25 |         23 |          3 |         51 |
+| Properties |          2 |         12 |          0 |          8 |         20 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++----------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                         | files      | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                            |         97 |     57,159 |        848 |      1,653 |     59,660 |
+| backend                                                                                      |         28 |     19,093 |        182 |        451 |     19,726 |
+| backend (Files)                                                                              |          7 |     17,779 |         52 |        112 |     17,943 |
+| backend\constants                                                                            |          3 |         15 |          0 |          7 |         22 |
+| backend\controllers                                                                          |          3 |        907 |        109 |        190 |      1,206 |
+| backend\lib                                                                                  |          3 |         59 |          0 |         24 |         83 |
+| backend\middlewares                                                                          |          2 |         66 |          3 |         28 |         97 |
+| backend\models                                                                               |          7 |        201 |          6 |         31 |        238 |
+| backend\routes                                                                               |          2 |         32 |         11 |         40 |         83 |
+| backend\utils                                                                                |          1 |         34 |          1 |         19 |         54 |
+| frontend                                                                                     |         69 |     38,066 |        666 |      1,202 |     39,934 |
+| frontend (Files)                                                                             |          4 |     32,933 |          0 |         37 |     32,970 |
+| frontend\public                                                                              |          2 |         50 |         23 |          4 |         77 |
+| frontend\src                                                                                 |         63 |      5,083 |        643 |      1,161 |      6,887 |
+| frontend\src (Files)                                                                         |          9 |        352 |         79 |        127 |        558 |
+| frontend\src\components                                                                      |         16 |      1,562 |        191 |        383 |      2,136 |
+| frontend\src\components\auth                                                                 |          1 |          9 |         12 |         14 |         35 |
+| frontend\src\components\layout                                                               |          4 |        607 |         53 |        121 |        781 |
+| frontend\src\components\shared                                                               |          5 |        498 |         89 |        133 |        720 |
+| frontend\src\components\specific                                                             |          4 |        409 |         37 |        105 |        551 |
+| frontend\src\components\styles                                                               |          2 |         39 |          0 |         10 |         49 |
+| frontend\src\constants                                                                       |          2 |         11 |          3 |          5 |         19 |
+| frontend\src\dialogs                                                                         |          6 |        716 |        112 |        180 |      1,008 |
+| frontend\src\events                                                                          |          1 |          6 |          0 |          5 |         11 |
+| frontend\src\library                                                                         |          4 |        489 |          7 |         50 |        546 |
+| frontend\src\loaders                                                                         |          4 |        109 |          0 |         18 |        127 |
+| frontend\src\pages                                                                           |         13 |      1,552 |        190 |        330 |      2,072 |
+| frontend\src\redux                                                                           |          7 |        244 |         30 |         49 |        323 |
+| frontend\src\redux (Files)                                                                   |          1 |         16 |          0 |          3 |         19 |
+| frontend\src\redux\api                                                                       |          1 |         30 |          0 |         11 |         41 |
+| frontend\src\redux\reducers                                                                  |          5 |        198 |         30 |         35 |        263 |
+| frontend\src\utils                                                                           |          1 |         42 |         31 |         14 |         87 |
++----------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++----------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                                                                     | language   | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| g:\self\fullstack\mockmate-optimize\backend\.env                                             | Properties |         10 |          0 |          6 |         16 |
+| g:\self\fullstack\mockmate-optimize\backend\app.js                                           | JavaScript |        112 |         39 |         67 |        218 |
+| g:\self\fullstack\mockmate-optimize\backend\app_https.js                                     | JavaScript |        126 |         12 |         29 |        167 |
+| g:\self\fullstack\mockmate-optimize\backend\constants\config.js                              | JavaScript |         11 |          0 |          4 |         15 |
+| g:\self\fullstack\mockmate-optimize\backend\constants\constants.js                           | JavaScript |          1 |          0 |          1 |          2 |
+| g:\self\fullstack\mockmate-optimize\backend\constants\events.js                              | JavaScript |          3 |          0 |          2 |          5 |
+| g:\self\fullstack\mockmate-optimize\backend\controllers\old.js                               | JavaScript |         41 |          0 |          6 |         47 |
+| g:\self\fullstack\mockmate-optimize\backend\controllers\postController.js                    | JavaScript |        253 |         15 |         51 |        319 |
+| g:\self\fullstack\mockmate-optimize\backend\controllers\userControllers.js                   | JavaScript |        613 |         94 |        133 |        840 |
+| g:\self\fullstack\mockmate-optimize\backend\db.js                                            | JavaScript |         11 |          0 |          3 |         14 |
+| g:\self\fullstack\mockmate-optimize\backend\lib\authHelper.js                                | JavaScript |         18 |          0 |          5 |         23 |
+| g:\self\fullstack\mockmate-optimize\backend\lib\helper.js                                    | JavaScript |          8 |          0 |          7 |         15 |
+| g:\self\fullstack\mockmate-optimize\backend\lib\validators.js                                | JavaScript |         33 |          0 |         12 |         45 |
+| g:\self\fullstack\mockmate-optimize\backend\middlewares\auth.js                              | JavaScript |         57 |          2 |         20 |         79 |
+| g:\self\fullstack\mockmate-optimize\backend\middlewares\multer.js                            | JavaScript |          9 |          1 |          8 |         18 |
+| g:\self\fullstack\mockmate-optimize\backend\models\chatSchema.js                             | JavaScript |         14 |          0 |          4 |         18 |
+| g:\self\fullstack\mockmate-optimize\backend\models\messageSchema.js                          | JavaScript |         29 |          0 |          4 |         33 |
+| g:\self\fullstack\mockmate-optimize\backend\models\metaSchema.js                             | JavaScript |          7 |          0 |          4 |         11 |
+| g:\self\fullstack\mockmate-optimize\backend\models\notificationSchema.js                     | JavaScript |         27 |          0 |          3 |         30 |
+| g:\self\fullstack\mockmate-optimize\backend\models\postSchema.js                             | JavaScript |         46 |          3 |          8 |         57 |
+| g:\self\fullstack\mockmate-optimize\backend\models\requestSchema.js                          | JavaScript |         19 |          0 |          3 |         22 |
+| g:\self\fullstack\mockmate-optimize\backend\models\userSchema.js                             | JavaScript |         59 |          3 |          5 |         67 |
+| g:\self\fullstack\mockmate-optimize\backend\package-lock.json                                | JSON       |     17,471 |          0 |          1 |     17,472 |
+| g:\self\fullstack\mockmate-optimize\backend\package.json                                     | JSON       |         33 |          0 |          1 |         34 |
+| g:\self\fullstack\mockmate-optimize\backend\redisClient.js                                   | JavaScript |         16 |          1 |          5 |         22 |
+| g:\self\fullstack\mockmate-optimize\backend\routes\postRoute.js                              | JavaScript |         12 |          3 |         12 |         27 |
+| g:\self\fullstack\mockmate-optimize\backend\routes\userRoute.js                              | JavaScript |         20 |          8 |         28 |         56 |
+| g:\self\fullstack\mockmate-optimize\backend\utils\features.js                                | JavaScript |         34 |          1 |         19 |         54 |
+| g:\self\fullstack\mockmate-optimize\frontend\.env                                            | Properties |          2 |          0 |          2 |          4 |
+| g:\self\fullstack\mockmate-optimize\frontend\README.md                                       | Markdown   |         38 |          0 |         33 |         71 |
+| g:\self\fullstack\mockmate-optimize\frontend\package-lock.json                               | JSON       |     32,838 |          0 |          1 |     32,839 |
+| g:\self\fullstack\mockmate-optimize\frontend\package.json                                    | JSON       |         55 |          0 |          1 |         56 |
+| g:\self\fullstack\mockmate-optimize\frontend\public\index.html                               | HTML       |         25 |         23 |          3 |         51 |
+| g:\self\fullstack\mockmate-optimize\frontend\public\manifest.json                            | JSON       |         25 |          0 |          1 |         26 |
+| g:\self\fullstack\mockmate-optimize\frontend\src\APP_Original.js                             | JavaScript |        100 |          6 |         32 |        138 |
+| g:\self\fullstack\mockmate-optimize\frontend\src\App.css                                     | CSS        |         97 |          4 |         21 |        122 |
+| g:\self\fullstack\mockmate-optimize\frontend\src\App.js                                      | JavaScript |        100 |          6 |         35 |        141 |
+| g:\self\fullstack\mockmate-optimize\frontend\src\App.test.js                                 | JavaScript |          7 |          0 |          2 |          9 |
+| g:\self\fullstack\mockmate-optimize\frontend\src\components\auth\ProtectedRoute.jsx          | JavaScript |          9 |         12 |         14 |         35 |
+| g:\self\fullstack\mockmate-optimize\frontend\src\components\layout\ChatHeader.jsx            | JavaScript |        187 |         17 |         41 |        245 |
+| g:\self\fullstack\mockmate-optimize\frontend\src\components\layout\ChatLayout.jsx            | JavaScript |        152 |          3 |         26 |        181 |
+| g:\self\fullstack\mockmate-optimize\frontend\src\components\layout\Header.jsx                | JavaScript |        259 |         33 |         51 |        343 |
+| g:\self\fullstack\mockmate-optimize\frontend\src\components\layout\HomeLayout.jsx            | JavaScript |          9 |          0 |          3 |         12 |
+| g:\self\fullstack\mockmate-optimize\frontend\src\components\shared\ChatItem.jsx              | JavaScript |        119 |         31 |         31 |        181 |
+| g:\self\fullstack\mockmate-optimize\frontend\src\components\shared\MessageComponent.jsx      | JavaScript |         65 |          2 |         15 |         82 |
+| g:\self\fullstack\mockmate-optimize\frontend\src\components\shared\NotificationItem.jsx      | JavaScript |        145 |         10 |         34 |        189 |
+| g:\self\fullstack\mockmate-optimize\frontend\src\components\shared\PostItem.jsx              | JavaScript |        133 |         45 |         47 |        225 |
+| g:\self\fullstack\mockmate-optimize\frontend\src\components\shared\RenderAttachment.jsx      | JavaScript |         36 |          1 |          6 |         43 |
+| g:\self\fullstack\mockmate-optimize\frontend\src\components\specific\ChatList.jsx            | JavaScript |         78 |         17 |         24 |        119 |
+| g:\self\fullstack\mockmate-optimize\frontend\src\components\specific\CreatePost.jsx          | JavaScript |        162 |          5 |         36 |        203 |
+| g:\self\fullstack\mockmate-optimize\frontend\src\components\specific\NotificationList.jsx    | JavaScript |         64 |          1 |         16 |         81 |
+| g:\self\fullstack\mockmate-optimize\frontend\src\components\specific\PostList.jsx            | JavaScript |        105 |         14 |         29 |        148 |
+| g:\self\fullstack\mockmate-optimize\frontend\src\components\styles\SelectFriendAnimation.jsx | JavaScript |         27 |          0 |          5 |         32 |
+| g:\self\fullstack\mockmate-optimize\frontend\src\components\styles\StyledComponents.jsx      | JavaScript |         12 |          0 |          5 |         17 |
+| g:\self\fullstack\mockmate-optimize\frontend\src\constants\colors.js                         | JavaScript |         10 |          0 |          3 |         13 |
+| g:\self\fullstack\mockmate-optimize\frontend\src\constants\config.js                         | JavaScript |          1 |          3 |          2 |          6 |
+| g:\self\fullstack\mockmate-optimize\frontend\src\dialogs\CreatePostDialog.jsx                | JavaScript |         25 |          0 |          7 |         32 |
+| g:\self\fullstack\mockmate-optimize\frontend\src\dialogs\FileMenuDialog.jsx                  | JavaScript |        119 |          2 |         25 |        146 |
+| g:\self\fullstack\mockmate-optimize\frontend\src\dialogs\MeetConfirmDialog.jsx               | JavaScript |         92 |          2 |         25 |        119 |
+| g:\self\fullstack\mockmate-optimize\frontend\src\dialogs\MeetRequestDialog.jsx               | JavaScript |         70 |          8 |         24 |        102 |
+| g:\self\fullstack\mockmate-optimize\frontend\src\dialogs\PostItemDialogBox.jsx               | JavaScript |        219 |         82 |         68 |        369 |
+| g:\self\fullstack\mockmate-optimize\frontend\src\dialogs\PostItemDialogBox_GPT.jsx           | JavaScript |        191 |         18 |         31 |        240 |
+| g:\self\fullstack\mockmate-optimize\frontend\src\events\events.js                            | JavaScript |          6 |          0 |          5 |         11 |
+| g:\self\fullstack\mockmate-optimize\frontend\src\index.css                                   | CSS        |          0 |          0 |          1 |          1 |
+| g:\self\fullstack\mockmate-optimize\frontend\src\index.js                                    | JavaScript |         14 |          5 |          7 |         26 |
+| g:\self\fullstack\mockmate-optimize\frontend\src\library\ChatHomeAnimation_1.json            | JSON       |          1 |          0 |          0 |          1 |
+| g:\self\fullstack\mockmate-optimize\frontend\src\library\ChatHomeAnimation_2.json            | JSON       |          1 |          0 |          0 |          1 |
+| g:\self\fullstack\mockmate-optimize\frontend\src\library\functions.js                        | JavaScript |        115 |          6 |         40 |        161 |
+| g:\self\fullstack\mockmate-optimize\frontend\src\library\sampleData.js                       | JavaScript |        372 |          1 |         10 |        383 |
+| g:\self\fullstack\mockmate-optimize\frontend\src\loaders\ChatListLoader.jsx                  | JavaScript |         37 |          0 |          4 |         41 |
+| g:\self\fullstack\mockmate-optimize\frontend\src\loaders\ErrorLoader.jsx                     | JavaScript |         29 |          0 |          6 |         35 |
+| g:\self\fullstack\mockmate-optimize\frontend\src\loaders\HomeLoader.jsx                      | JavaScript |         22 |          0 |          3 |         25 |
+| g:\self\fullstack\mockmate-optimize\frontend\src\loaders\PostLoader.jsx                      | JavaScript |         21 |          0 |          5 |         26 |
+| g:\self\fullstack\mockmate-optimize\frontend\src\pages\ChatHome.jsx                          | JavaScript |         22 |          5 |          8 |         35 |
+| g:\self\fullstack\mockmate-optimize\frontend\src\pages\ChatWindow.jsx                        | JavaScript |        245 |         79 |        102 |        426 |
+| g:\self\fullstack\mockmate-optimize\frontend\src\pages\Home.jsx                              | JavaScript |        101 |         21 |         28 |        150 |
+| g:\self\fullstack\mockmate-optimize\frontend\src\pages\Login.jsx                             | JavaScript |        283 |         36 |         48 |        367 |
+| g:\self\fullstack\mockmate-optimize\frontend\src\pages\Login1.jsx                            | JavaScript |        136 |         16 |         21 |        173 |
+| g:\self\fullstack\mockmate-optimize\frontend\src\pages\Meet.jsx                              | JavaScript |          7 |          0 |          4 |         11 |
+| g:\self\fullstack\mockmate-optimize\frontend\src\pages\MeetRoom.jsx                          | JavaScript |         10 |          0 |          6 |         16 |
+| g:\self\fullstack\mockmate-optimize\frontend\src\pages\MeetZEGO.jsx                          | JavaScript |         57 |          0 |         14 |         71 |
+| g:\self\fullstack\mockmate-optimize\frontend\src\pages\PageNotFound.jsx                      | JavaScript |          9 |          0 |          5 |         14 |
+| g:\self\fullstack\mockmate-optimize\frontend\src\pages\Profile.jsx                           | JavaScript |        231 |          8 |         37 |        276 |
+| g:\self\fullstack\mockmate-optimize\frontend\src\pages\Register.jsx                          | JavaScript |        257 |         21 |         31 |        309 |
+| g:\self\fullstack\mockmate-optimize\frontend\src\pages\TempDrawer.jsx                        | JavaScript |         22 |          0 |          5 |         27 |
+| g:\self\fullstack\mockmate-optimize\frontend\src\pages\ValidateOTP.jsx                       | JavaScript |        172 |          4 |         21 |        197 |
+| g:\self\fullstack\mockmate-optimize\frontend\src\redux\api\api.js                            | JavaScript |         30 |          0 |         11 |         41 |
+| g:\self\fullstack\mockmate-optimize\frontend\src\redux\reducers\auth.js                      | JavaScript |         22 |          0 |          6 |         28 |
+| g:\self\fullstack\mockmate-optimize\frontend\src\redux\reducers\chat.js                      | JavaScript |         39 |          3 |          7 |         49 |
+| g:\self\fullstack\mockmate-optimize\frontend\src\redux\reducers\meet.js                      | JavaScript |         39 |          0 |          6 |         45 |
+| g:\self\fullstack\mockmate-optimize\frontend\src\redux\reducers\misc.js                      | JavaScript |         42 |         27 |         10 |         79 |
+| g:\self\fullstack\mockmate-optimize\frontend\src\redux\reducers\post.js                      | JavaScript |         56 |          0 |          6 |         62 |
+| g:\self\fullstack\mockmate-optimize\frontend\src\redux\store.js                              | JavaScript |         16 |          0 |          3 |         19 |
+| g:\self\fullstack\mockmate-optimize\frontend\src\reportWebVitals.js                          | JavaScript |         12 |          0 |          2 |         14 |
+| g:\self\fullstack\mockmate-optimize\frontend\src\setupTests.js                               | JavaScript |          1 |          4 |          1 |          6 |
+| g:\self\fullstack\mockmate-optimize\frontend\src\socket.js                                   | JavaScript |         21 |         54 |         26 |        101 |
+| g:\self\fullstack\mockmate-optimize\frontend\src\utils\style.css                             | CSS        |         42 |         31 |         14 |         87 |
+| Total                                                                                        |            |     57,159 |        848 |      1,653 |     59,660 |
++----------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+

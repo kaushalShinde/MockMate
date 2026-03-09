@@ -1,0 +1,76 @@
+
+
+
+when in prod add the env variables of zego cloud
+
+
+
+https://coolors.co/palettes/popular
+https://colorhunt.co/palettes/cold
+
+
+best google fonts
+patrick hand sc
+
+
+########################
+
+
+learn => 
+redux, context, contextProvider, useDispatch, protectedRoute, 
+
+
+
+########################
+
+
+
+do the redux implementation for the screen size handler
+in chat list=> implement the is online and new message functionality
+in chat list=> implement the background color change when we open any chat change that color
+resolve warning of chatlist drawer
+resolve the post item dialog open close issue
+
+
+##################
+
+removed totalViews, totalLikes, totalDislikes
+from user schema because we can also get it from the posts that we are storing in userschema
+
+
+what we have done to get real time messages ??
+when ever user submits messages form in message component
+the NEW_MESSAGE event fires from socket,
+and we create two message in backend one for backend and for realTimeMessage
+and then from backend the NEW_MESSAGE event emits to the socket ids of both users
+and we simply listen that even in client
+and push new messge to the Messages and it will get added 
+then in useEffect if the messages get changes
+we use the css property to smoothly get to bottom (bottomRef is div above the message send box) => bottomRef.current.scrollIntoView({ behavior: "smooth" }) 
+
+
+
+
+
+################
+
+
+learnings
+
+
+to adjust the text box shown
+    width: "50%"
+    overflow: 'hidden',
+    whiteSpace: 'nowrap',
+
+withCredentials: true allows us to access cookies
+if we add this to cors of socket the we can access it 
+
+
+
+
+####################
+Interviews
+didnt stored redundent data
+
+

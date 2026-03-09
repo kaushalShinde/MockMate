@@ -1,0 +1,11 @@
+
+
+##### learned
+
+in registring new user i had to upload the file for avata
+but it cannot be get using req.body simple json
+so sent it using form-data in request
+and now also cant get
+so used multer to get the files in from data using req.file
+
+see multer middleware

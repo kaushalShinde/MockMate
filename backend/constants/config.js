@@ -19,6 +19,7 @@ const corsOption = {
       "http://localhost:3000",
       "https://mockm8.com",
       "https://www.mockm8.com",
+      "https://mockmate-backend-m6i9.onrender.com",
       process.env.CLIENT_URL,
     ].filter(Boolean);;
 

@@ -3,9 +3,17 @@ import { UserSchema as User } from "../models/userSchema.js";
 import { PostSchema as Post } from "../models/postSchema.js";
 import { NotificationSchema as Notification } from "../models/notificationSchema.js";
 import { emitEvent } from "../utils/features.js";
-import redis from "../redisClient.js";
 import Meta from "../models/metaSchema.js";
+
 import { RedisCacheTime } from "../constants/constants.js";
+
+// import redis from "../redisClient.js"; 
+import { getRedis } from "../redisClient.js"; 
+ 
+
+// calling redis
+const redis = getRedis();
+
 
 const createPost = async (req, res) => {
     try{

@@ -28,7 +28,7 @@ import { ChatSchema as Chat } from "./models/chatSchema.js";
 
 import AWS from 'aws-sdk';
 import mongoose from 'mongoose';
-import connectRedis from "./redisClient.js";
+import { connectRedis } from "./redisClient.js";
 
 
 

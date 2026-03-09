@@ -14,10 +14,15 @@ import { comparePassword, hashPassword } from '../lib/authHelper.js';
 import { emitEvent, uploadFilesToCloudinary } from '../utils/features.js';
 import Meta from '../models/metaSchema.js';
 
-import redis from "../redisClient.js";
+
 import mongoose from 'mongoose';
 import AWS from 'aws-sdk';
 
+import { getRedis } from "../redisClient.js"; 
+ 
+
+// calling redis
+const redis = getRedis();
 
 AWS.config.update({
     region: process.env.AWS_REGION || "ap-south-1",

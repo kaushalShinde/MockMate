@@ -33,7 +33,7 @@ export default redis;
 import Redis from "ioredis";
 
 let redis;
-const connectRedis = (redisURL) => {
+export const connectRedis = (redisURL) => {
   redis = new Redis(redisURL, {
     maxRetriesPerRequest: null,
     retryStrategy(times) {
@@ -59,4 +59,4 @@ const connectRedis = (redisURL) => {
 
 export const getRedis = () => redis;
 
-export default connectRedis;
+// export default connectRedis;

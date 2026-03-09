@@ -7,7 +7,7 @@ import Meta from "../models/metaSchema.js";
 
 import { RedisCacheTime } from "../constants/constants.js";
 
-import redis from "../redisClient.js"; 
+import redis from "../connection/redisClient.js"; 
 
 const createPost = async (req, res) => {
     try{

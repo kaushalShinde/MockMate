@@ -18,8 +18,8 @@ import Meta from '../models/metaSchema.js';
 import mongoose from 'mongoose';
 import AWS from 'aws-sdk';
  
-import redis from "../redisClient.js"; 
-
+import { sendEmail } from "../connection/sendEmail.js";
+import redis from "../connection/redisClient.js"; 
 
 AWS.config.update({
     region: process.env.AWS_REGION || "ap-south-1",
@@ -62,7 +62,9 @@ export const test = async(req, res) => {
             console.log("created new User", newUser);
             user = newUser;
         }
-
+        
+        /*
+         * AWS SES Email Service
         console.log('sending ses email')
         await ses.sendEmail({
           Source: 'no-reply@mockm8.com',
@@ -73,7 +75,14 @@ export const test = async(req, res) => {
           }
         }).promise().then(console.log).catch(console.error);
         console.log('sent ses email');
-
+        */
+       
+        // Brevo Email Sender
+        await sendEmail({
+            to: "kaushalshinde888@gmail.com",
+            subject: "Test Email",
+            text: "If you see this, Brevo works."
+        });
 
         console.log('Now testing Redis below')
         const key = `otp:${email}`;
@@ -126,9 +135,9 @@ const sendOTP_signup = async (req, res) => {
         "EX",
         RedisCacheTime
       );
-  
-      // send email OTP
-    //   console.log('sending ses email')
+    
+      /* 
+       * AWS SES 
       await ses.sendEmail({
         Source: process.env.SENDER_EMAIL,
         Destination: { ToAddresses: [email] },
@@ -137,8 +146,14 @@ const sendOTP_signup = async (req, res) => {
           Body: { Text: { Data: `Your OTP is ${otp}.` } }
         }
       }).promise();
+      */
+
+      await sendEmail({
+        to: "kaushalshinde888@gmail.com",
+        subject: `@${username}, Verify your Signup - OTP`,
+        text: `Your OTP is ${otp}.`
+      });
   
-    //   console.log('sent ses email')
 
       return res.status(200).json({ success: true, message: "OTP sent to your email" });
   
@@ -306,6 +321,8 @@ const sendOTP_2FA = async(req, res) => {
 
         const otp = Math.floor(100000 + Math.random() * 900000);
 
+        /*
+         * AWS SES 
         const params = {
             Source: process.env.SENDER_EMAIL,
             Destination: { ToAddresses: [email] },
@@ -314,14 +331,15 @@ const sendOTP_2FA = async(req, res) => {
                 Body: { Text: { Data: `Your OTP is ${otp}. It will expire in 5 minutes.` } },
             },
         };
-
         await ses.sendEmail(params).promise();
+        */
 
-        // otps.set(email, { otp, expires: now + 5 * 60 * 1000 });
-        // otpRequests.set(email, {
-        //     count: record.count + 1,
-        //     lastRequest: now,
-        // });
+        // Brevo Email sender
+        await sendEmail({
+            to: email,
+            subject: `@${username}, your OTP`,
+            text: `Your OTP is ${otp}.`
+        });
 
         const otpInfo = {
             otp,

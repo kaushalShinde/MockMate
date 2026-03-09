@@ -17,8 +17,8 @@ import Meta from '../models/metaSchema.js';
 import mongoose from 'mongoose';
 import AWS from 'aws-sdk';
 
-import redis from "../redisClient.js"; 
-
+import redis from "../connection/redisClient.js"; 
+import { sendEmail } from "../connection/sendEmail.js";
 
 AWS.config.update({
     region: process.env.AWS_REGION || "ap-south-1",
@@ -28,7 +28,27 @@ AWS.config.update({
 
 const ses = new AWS.SES();
 
-const sendEmail = async(req, res) => {
+
+const brevoEmail = async(req, res) => {
+    try {
+                
+        const response = await sendEmail({
+            to: "kaushalshinde888@gmail.com",
+            subject: "Test Email",
+            text: "If you see this, Brevo works."
+        });
+
+        console.log("BREVO EMAIL RESPONSE => ", response)
+
+        return res.status(200).json(response);
+    }
+    catch(err) {
+        console.log(err);
+        return res.status(500).json(err);
+    }
+}
+
+const SESsendEmail = async(req, res) => {
     const { email } = req.body;
 
     try {
@@ -151,7 +171,8 @@ const deleteUser = async(req, res) => {
 
 
 export {
-    sendEmail,
+    brevoEmail,
+    SESsendEmail,
     storeRedis,
     createUser,
     verifyLogin,

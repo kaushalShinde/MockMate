@@ -19,7 +19,7 @@ const corsOption = {
       "http://localhost:3000",
       "https://mockm8.com",
       "https://www.mockm8.com",
-      "https://mockmate-backend-m6i9.onrender.com",
+      "https://dazzling-griffin-af4d6f.netlify.app",
       process.env.CLIENT_URL,
     ].filter(Boolean);;
 

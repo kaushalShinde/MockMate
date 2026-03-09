@@ -16,11 +16,8 @@ import Meta from '../models/metaSchema.js';
 
 import mongoose from 'mongoose';
 import AWS from 'aws-sdk';
-import { getRedis } from "../redisClient.js"; 
- 
 
-// calling redis
-const redis = getRedis();
+import redis from "../redisClient.js"; 
 
 
 AWS.config.update({

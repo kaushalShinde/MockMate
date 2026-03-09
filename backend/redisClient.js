@@ -28,35 +28,35 @@ export default redis;
 */
 
 
-
-
 import Redis from "ioredis";
 
-let redis;
-export const connectRedis = (redisURL) => {
-  redis = new Redis(redisURL, {
-    maxRetriesPerRequest: null,
-    retryStrategy(times) {
-      return Math.min(times * 500, 2000);
-    },
-  });
-
-  redis.on("connect", () => {
-    console.log(`Connected to Redis Cache\n`);
-  });
-
-  redis.on("ready", () => {
-    console.log("Redis Ready \n");
-  });
-
-  redis.on("error", (err) => {
-    console.error("### Redis Error: \n", err.message);
-  });
-
-  return redis;
-};
+import dotenv from "dotenv";
+dotenv.config({
+    path: "./.env",
+});
 
 
-export const getRedis = () => redis;
+if (!process.env.REDIS_URL) {
+  throw new Error("REDIS_URL is not defined");
+}
 
-// export default connectRedis;
+const redis = new Redis(process.env.REDIS_URL, {
+  maxRetriesPerRequest: null,
+  retryStrategy(times) {
+    return Math.min(times * 500, 2000);
+  },
+});
+
+redis.on("connect", () => {
+  console.log("Connected to Redis Cache");
+});
+
+redis.on("ready", () => {
+  console.log("Redis Ready");
+});
+
+redis.on("error", (err) => {
+  console.error("Redis Error:", err.message);
+});
+
+export default redis;

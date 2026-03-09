@@ -17,12 +17,9 @@ import Meta from '../models/metaSchema.js';
 
 import mongoose from 'mongoose';
 import AWS from 'aws-sdk';
-
-import { getRedis } from "../redisClient.js"; 
  
+import redis from "../redisClient.js"; 
 
-// calling redis
-const redis = getRedis();
 
 AWS.config.update({
     region: process.env.AWS_REGION || "ap-south-1",

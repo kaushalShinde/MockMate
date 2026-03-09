@@ -28,7 +28,8 @@ import { ChatSchema as Chat } from "./models/chatSchema.js";
 
 import AWS from 'aws-sdk';
 import mongoose from 'mongoose';
-import { connectRedis } from "./redisClient.js";
+// import { connectRedis } from "./redisClient.js";
+import redis from "./redisClient.js";
 
 
 
@@ -44,7 +45,7 @@ const app = express();
 // connect to the database
 connectDB(mongoURI);
 // connect redis cache
-connectRedis(redisURL);
+// connectRedis(redisURL);
 
 
 cloudinary.config({
@@ -268,22 +269,23 @@ io.on('connection', (socket) => {
 //     console.log(`Server Running on http://localhost:${PORT}`);
 // });
 
-
-// if(process.env.NODE_ENV == 'development') {
-//     server.listen(PORT, () => { 
-//         console.log(`Server Running on http://localhost:${PORT}`);
-//     });
-// }
-// else {
-//     server.listen(PORT, '0.0.0.0', () => { 
-//         console.log(`Server Running on http://0.0.0.0:${PORT}`);
-//     });
-// }
+// server.listen(PORT, '0.0.0.0', () => {
+//     console.log(`Server Running on http://0.0.0.0:${PORT}`);
+// });
 
 
+if(process.env.NODE_ENV == 'DEV') {
+    server.listen(PORT, () => { 
+        console.log(`Server Running on http://localhost:${PORT}`);
+    });
+}
+else {
     server.listen(PORT, '0.0.0.0', () => { 
         console.log(`Server Running on http://0.0.0.0:${PORT}`);
     });
+}
+
+
 
 export { userSocketIDs };
 

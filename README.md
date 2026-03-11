@@ -9,8 +9,8 @@
 **Find your mock interview partner. Practice together. Get hired.**
 
 [![Live Demo](https://img.shields.io/badge/🚀%20Live%20Demo-Netlify-00C7B7?style=flat-square)](https://dazzling-griffin-af4d6f.netlify.app/)
-[![Frontend](https://img.shields.io/badge/Frontend-React.js-61DAFB?style=flat-square&logo=react)](https://github.com/kaushalShinde/MockMate/frontend)
-[![Backend](https://img.shields.io/badge/Backend-Node.js-339933?style=flat-square&logo=node.js)](https://github.com/kaushalShinde/MockMate/backend)
+[![Frontend](https://img.shields.io/badge/Frontend-React.js-61DAFB?style=flat-square&logo=react)](https://github.com/kaushalShinde/MockMate/tree/main/frontend)
+[![Backend](https://img.shields.io/badge/Backend-Node.js-339933?style=flat-square&logo=node.js)](https://github.com/kaushalShinde/MockMate/tree/main/backend)
 [![Database](https://img.shields.io/badge/Database-MongoDB%20Atlas-47A248?style=flat-square&logo=mongodb)](https://github.com/kaushalShinde/MockMate)
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)](LICENSE)
 
